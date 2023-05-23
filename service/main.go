@@ -4,10 +4,11 @@ import (
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
-	db "github.com/wartum/songbook-backend/db_access"
-	jwt "github.com/wartum/songbook-backend/jwt"
 	"log"
 	"net/http"
+
+	db "github.com/wartum/songbook-backend/db_access"
+	jwt "github.com/wartum/songbook-backend/jwt"
 )
 
 type LoginCredentials struct {
@@ -40,6 +41,7 @@ func verify_user(username string, password string) bool {
 }
 
 func login(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Access-Control-Allow-Origin", "*")
 	var creds LoginCredentials
 	err := json.NewDecoder(r.Body).Decode(&creds)
 	if err != nil {
